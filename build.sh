@@ -1,10 +1,12 @@
 #!/bin/bash
 #
-# Compile script for FSociety kernel
+# Compile script for XRadens kernel
 # Copyright (C) 2020-2021 Adithya R.
+# Copyright (C) 2025 xradens
 
 SECONDS=0 # builtin bash timer
-ZIPNAME="FSociety-surya-$(date '+%Y%m%d-%H%M').zip"
+BRANCH="Azure"
+ZIPNAME="$BRANCH-surya-$(date '+%Y%m%d').zip"
 TC_DIR="$(pwd)/tc/clang-neutron"
 AK3_DIR="$(pwd)/android/AnyKernel3"
 DEFCONFIG="surya_defconfig"
@@ -58,13 +60,13 @@ if [ -f "$kernel" ] && [ -f "$dtb" ] && [ -f "$dtbo" ]; then
 	echo -e "\nKernel compiled succesfully! Zipping up...\n"
 	if [ -d "$AK3_DIR" ]; then
 		cp -r $AK3_DIR AnyKernel3
-	elif ! git clone -q --depth=1 https://github.com/rd-stuffs/AnyKernel3 -b FSociety; then
+	elif ! git clone -q --depth=1 https://github.com/xradens/AnyKernel3 -b Azure; then
 		echo -e "\nAnyKernel3 repo not found locally and couldn't clone from GitHub! Aborting..."
 		exit 1
 	fi
 	cp $kernel $dtb $dtbo AnyKernel3
 	cd AnyKernel3
-	git checkout FSociety &> /dev/null
+	git checkout Azure &> /dev/null
 	zip -r9 "../$ZIPNAME" * -x .git modules\* patch\* ramdisk\* README.md *placeholder
 	cd ..
 	rm -rf AnyKernel3
