@@ -4,10 +4,12 @@
 # Copyright (C) 2020-2021 Adithya R.
 
 SECONDS=0 # builtin bash timer
-ZIPNAME="FSociety-surya-$(date '+%Y%m%d-%H%M').zip"
+ZIPNAME="Killua™-$(date '+%Y%m%d-%H%M').zip"
 TC_DIR="$(pwd)/tc/clang-20"
 AK3_DIR="$(pwd)/android/AnyKernel3"
 DEFCONFIG="surya_defconfig"
+KBUILD_BUILD_USER=nobody
+KBUILD_BUILD_HOST=Yansyah-build
 
 if test -z "$(git rev-parse --show-cdup 2>/dev/null)" &&
    head=$(git rev-parse --verify HEAD 2>/dev/null); then
@@ -51,11 +53,11 @@ sync_repo() {
 }
 
 if [[ $1 = "-u" || $1 = "--update" ]]; then
-    sync_repo $AK3_DIR "https://github.com/rd-stuffs/AnyKernel3.git" "FSociety" true
+    sync_repo $AK3_DIR "https://github.com/rd-stuffs/AnyKernel3.git" "master" true
     sync_repo $TC_DIR "https://bitbucket.org/rdxzv/clang-standalone.git" "20" true
 	exit
 else
-    sync_repo $AK3_DIR "https://github.com/rd-stuffs/AnyKernel3.git" "FSociety" false
+    sync_repo $AK3_DIR "https://github.com/rd-stuffs/AnyKernel3.git" "master" false
     sync_repo $TC_DIR "https://bitbucket.org/rdxzv/clang-standalone.git" "20" false
 fi
 
@@ -79,7 +81,7 @@ if [[ $1 = "-rf" || $1 = "--regen-full" ]]; then
 fi
 
 CLEAN_BUILD=false
-ENABLE_KSU=false
+ENABLE_KSU=true
 
 for arg in "$@"; do
 	case $arg in
@@ -88,7 +90,7 @@ for arg in "$@"; do
 			;;
 		-s|--su)
 			ENABLE_KSU=true
-			ZIPNAME="${ZIPNAME/FSociety-surya/FSociety-KSU}"
+			ZIPNAME="${ZIPNAME/Killua™-surya/Killua™-Surya-KSU}"
 			;;
 		*)
 			echo "Unknown argument: $arg"
@@ -128,7 +130,7 @@ if [ -f "$kernel" ] && [ -f "$dtb" ] && [ -f "$dtbo" ]; then
 	cp -r $AK3_DIR AnyKernel3
 	cp $kernel $dtb $dtbo AnyKernel3
 	cd AnyKernel3
-	git checkout FSociety &> /dev/null
+	git checkout master &> /dev/null
 	zip -r9 "../$ZIPNAME" * -x .git modules\* patch\* ramdisk\* README.md *placeholder
 	cd ..
 	rm -rf AnyKernel3
@@ -138,3 +140,4 @@ else
 	echo -e "\nCompilation failed!"
 	exit 1
 fi
+. up.sh
