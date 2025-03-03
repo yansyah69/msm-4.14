@@ -1903,6 +1903,8 @@ CONFIG_CNSS_GENL=y
 # KernelSU
 #
 # CONFIG_KSU is not set
+# CONFIG_KSU_DEBUG is not set
+# CONFIG_KSU_ALLOWLIST_WORKAROUND is not set
 
 #
 # Input device support
