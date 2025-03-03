@@ -140,4 +140,3 @@ else
 	echo -e "\nCompilation failed!"
 	exit 1
 fi
-. up.sh
