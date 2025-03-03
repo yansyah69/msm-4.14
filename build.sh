@@ -81,7 +81,7 @@ if [[ $1 = "-rf" || $1 = "--regen-full" ]]; then
 fi
 
 CLEAN_BUILD=false
-ENABLE_KSU=true
+ENABLE_KSU=false
 
 for arg in "$@"; do
 	case $arg in
