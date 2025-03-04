@@ -90,7 +90,7 @@ for arg in "$@"; do
 			;;
 		-s|--su)
 			ENABLE_KSU=true
-			ZIPNAME="${ZIPNAME/Killua-surya/Killua-Surya-KSU}"
+			ZIPNAME="${ZIPNAME/Killua-surya/Killua-surya-KSU}"
 			;;
 		*)
 			echo "Unknown argument: $arg"
